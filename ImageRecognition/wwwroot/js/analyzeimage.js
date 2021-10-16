@@ -10,7 +10,7 @@ function ComputerVisionFunction() {
     }
 
     const jsonBodyItem = {
-        imageUrl: imageUrl
+        imageUrl: "https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_960_720.jpg"
     };
 
     fetch(url,
@@ -35,7 +35,7 @@ function ComputerVisionFunction() {
 
             imageDiv.appendChild(imgTag);
 
-            var fullTextResponse = '<h4>Anylyze result</h4>';
+            var fullTextResponse = '<h4>Analyze result</h4>';
 
             fullTextResponse += '<p><b>Description</b>: ' + data.description.captions[0].text + '.<p/> ';
 
