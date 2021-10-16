@@ -34,7 +34,7 @@ namespace ImageRecognitionFunction
 
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
-            string imageUrl = "https://cdn.pixabay.com/photo/2020/05/12/11/39/cat-5162540_960_720.jpg";
+            string imageUrl = data?.imageUrl;
 
             ComputerVisionClient client = Authenticate(computerVisionEndpoint, computerVisionKey);
             var analyzeResult = await ImageRecognitionUrl(client, imageUrl);
