@@ -1,11 +1,27 @@
 ﻿@page "/"
+    <head>
+        
+    </head>
 
-<h1>Welcome to Jespers Image Recognizer!</h1>
+    <body>
+        <h1>Welcome to Jespers Image Recognizer!</h1>
 
-<h4>Input picture URL, and click "Analyze".</h4>
+        <h4>Input picture URL, and click "Analyze".</h4>
 
-<p>Indsæt URL her: <input id="imageRecognitionURL"></p>
+        <div class="p-4">
+            <form action="javascript:void(0);" method="POST" onsubmit="ComputerVisionFunction()">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="imageUrlInput" aria-describedby="emailHelp" placeholder="Input URL here" />
+                    <small id="emailHelp" class="form-text text-muted">URL must end on .jpg or .png</small>
+                </div>
+                <input type="submit" value="Analyze" class="btn btn-primary" />
+            </form>
+            <div hidden id="spinner"></div>
+            <div id="imageDescription"></div>
+        </div>
+        
+    </body>
 
-<button>Analyze</button>
+
 
 

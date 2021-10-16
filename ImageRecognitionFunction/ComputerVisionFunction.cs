@@ -30,8 +30,14 @@ namespace ImageRecognitionFunction
             string computerVisionKey = config["ComputerVisionKey"];
             string computerVisionEndpoint = "https://computervisionudviklingafstoresystemer.cognitiveservices.azure.com/";
 
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+
+            dynamic data = JsonConvert.DeserializeObject(requestBody);
+
+            string imageUrl = data?.imageUrl;
+
             ComputerVisionClient client = Authenticate(computerVisionEndpoint, computerVisionKey);
-            var analyzeResult = await ImageRecognitionUrl(client, "https://cdn.pixabay.com/photo/2020/05/12/11/39/cat-5162540_960_720.jpg");
+            var analyzeResult = await ImageRecognitionUrl(client, imageUrl);
 
             return new OkObjectResult(analyzeResult);
         }
