@@ -35,28 +35,28 @@ function ComputerVisionFunction() {
 
             imageDiv.appendChild(imgTag);
 
-            var fullTextResponse = '<h4>Analyze result</h4>';
+            var fullTextResponse = '<h4>Image analyze result:</h4>';
 
             fullTextResponse += '<p><b>Description</b>: ' + data.description.captions[0].text + '.<p/> ';
 
             if (data.adult.isAdultContent == false) {
-                fullTextResponse += '<b>The image does not contain adult content</b><br />';
+                fullTextResponse += '<b>The image does not contain adult content.</b><br />';
             }
             else {
-                fullTextResponse += 'The image does contain adult content<br />';
+                fullTextResponse += 'The image does contain adult content.<br />';
             }
 
             if (data.adult.isRacyContent == false) {
-                fullTextResponse += '<b>The image does not contain racy content</b><br />';
+                fullTextResponse += '<b>The image does not contain racy content.</b><br />';
             }
             else {
-                fullTextResponse += 'The image does contain racy content<br />';
+                fullTextResponse += 'The image does contain racy content.<br />';
             }
 
-            fullTextResponse += '<h4>Tags</h4>';
+            fullTextResponse += '<h4>Image tags:</h4>';
 
             data.tags.forEach(function (arrayTag) {
-                fullTextResponse += 'I am ' + Math.round((arrayTag.confidence * 100 + Number.EPSILON) * 100) / 100 + ' % sure of ' + arrayTag.name + '<br />';
+                fullTextResponse += 'ComputerVision is ' + Math.round((arrayTag.confidence * 100 + Number.EPSILON) * 100) / 100 + '% sure of ' + arrayTag.name + '.<br />';
             });
 
 
