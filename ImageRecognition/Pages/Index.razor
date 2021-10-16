@@ -1,4 +1,6 @@
 ﻿@page "/"
+@inject IJSRuntime JS
+
     <head>
         
     </head>
@@ -9,7 +11,7 @@
         <h4>Input picture URL, and click "Analyze".</h4>
 
         <div class="p-4">
-            <form action="javascript:void(0);" method="POST" onsubmit="ComputerVisionFunction()">
+            <form action="javascript:void(0);" method="POST" @onsubmit="JavaScriptReturn">
                 <div class="form-group">
                     <input type="text" class="form-control" id="imageUrlInput" aria-describedby="emailHelp" placeholder="Input URL here" />
                     <small id="emailHelp" class="form-text text-muted">URL must end on .jpg or .png</small>
@@ -21,6 +23,14 @@
         </div>
         
     </body>
+
+@code
+{
+    async Task JavaScriptReturn()
+    {
+        await JS.InvokeVoidAsync("ComputerVisionFunction");
+    }
+}
 
 
 

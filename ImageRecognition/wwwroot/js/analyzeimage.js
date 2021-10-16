@@ -13,7 +13,7 @@ function ComputerVisionFunction() {
         imageUrl: imageUrl
     };
 
-    fetch(uri,
+    fetch(url,
         {
             method: 'POST',
             headers: {
@@ -65,7 +65,7 @@ function ComputerVisionFunction() {
             console.log(data)
         })
         .catch(err => {
-            document.getElementById('imageDescription').innerHTML = "Something went wrong";
+            document.getElementById('imageDescription').innerHTML = "Something went wrong.";
         })
 }
 
@@ -79,5 +79,9 @@ function ComputerVisionFunction() {
             '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
             '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
         return !!pattern.test(str);
-    }
+}
+
+
+function createAlert() {
+    alert("HEY JAVASCRIPT VIRKER!");
 }
