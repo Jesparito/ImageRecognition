@@ -10,9 +10,9 @@ using Newtonsoft.Json;
 
 namespace ImageRecognitionFunction
 {
-    public static class Function1
+    public static class ComputerVisionFunction
     {
-        [FunctionName("Function1")]
+        [FunctionName("ComputerVisionFunction")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
