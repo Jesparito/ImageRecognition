@@ -7,6 +7,10 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
+using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace ImageRecognitionFunction
 {
@@ -15,21 +19,51 @@ namespace ImageRecognitionFunction
         [FunctionName("ComputerVisionFunction")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-            ILogger log)
+            ILogger log, ExecutionContext context)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            var config = new ConfigurationBuilder()
+                .SetBasePath(context.FunctionAppDirectory)
+                .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
 
-            string name = req.Query["name"];
+            string computerVisionKey = config["ComputerVisionKey"];
+            string computerVisionEndpoint = "https://computervisionudviklingafstoresystemer.cognitiveservices.azure.com/";
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            ComputerVisionClient client = Authenticate(computerVisionEndpoint, computerVisionKey);
+            var analyzeResult = await ImageRecognitionUrl(client, "https://cdn.pixabay.com/photo/2020/05/12/11/39/cat-5162540_960_720.jpg");
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            return new OkObjectResult(analyzeResult);
+        }
 
-            return new OkObjectResult(responseMessage);
+        public static ComputerVisionClient Authenticate(string endpoint, string key)
+        {
+            ComputerVisionClient client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(key))
+            {
+                Endpoint = endpoint
+            };
+
+            return client;
+        }
+
+        public static async Task<ImageAnalysis> ImageRecognitionUrl(ComputerVisionClient client, string imageUrl)
+        {
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("ANALYZE IMAGE - URL");
+            Console.WriteLine();
+
+            List<VisualFeatureTypes?> features = new List<VisualFeatureTypes?>()
+            {
+                VisualFeatureTypes.Categories, VisualFeatureTypes.Description,
+                VisualFeatureTypes.Faces, VisualFeatureTypes.ImageType,
+                VisualFeatureTypes.Tags, VisualFeatureTypes.Adult,
+                VisualFeatureTypes.Color, VisualFeatureTypes.Brands,
+                VisualFeatureTypes.Objects
+            };
+
+            ImageAnalysis results = await client.AnalyzeImageAsync(imageUrl, visualFeatures: features);
+
+            return results;
         }
     }
 }
