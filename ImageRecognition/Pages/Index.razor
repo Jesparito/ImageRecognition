@@ -13,12 +13,12 @@
         <div class="p-4">
             <form action="javascript:void(0);" method="POST" @onsubmit="JavaScriptReturn">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="imageUrlInput" aria-describedby="emailHelp" placeholder="Input URL here" />
+                     <input type="text" class="form-control" id="imageUrlInput" aria-describedby="emailHelp" placeholder="Input URL here" />
                     <small id="emailHelp" class="form-text text-muted">URL must end on .jpg or .png</small>
                 </div>
                 <input type="submit" value="Analyze" class="btn btn-primary" />
             </form>
-            <div hidden id="spinner"></div>
+            <SfSpinner @bind-Visible="SpinnerVisible" Label="Analyzing picture..." ></SfSpinner>
             <div id="imageDescription"></div>
         </div>
         <div class="col-lg-6">
@@ -29,9 +29,14 @@
 
 @code
 {
+    public bool SpinnerVisible { get; set; }
+
+
     async Task JavaScriptReturn()
     {
+        SpinnerVisible = true;
         await JS.InvokeVoidAsync("ComputerVisionFunction");
+        SpinnerVisible = false;
     }
 }
 
