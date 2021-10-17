@@ -5,7 +5,7 @@ function ComputerVisionFunction() {
     var isValidUrl = validateUrl(imageUrl);
 
     if (isValidUrl == false) {
-        document.getElementById('imageDescription').innerHTML = 'Du har ikke angivet en valid url';
+        document.getElementById('imageDescription').innerHTML = 'Your URL is not valid, please try again!';
         return;
     }
 
