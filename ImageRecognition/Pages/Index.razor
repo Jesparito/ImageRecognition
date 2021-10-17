@@ -34,10 +34,10 @@
     async Task JavaScriptReturn()
     {
         SpinnerVisible = true;
-        await Task.Delay(100);
+        await Task.Delay(500);
         await JS.InvokeVoidAsync("ComputerVisionFunction");
         SpinnerVisible = false;
-        await Task.Delay(100);
+        await Task.Delay(500);
     }
 }
 
