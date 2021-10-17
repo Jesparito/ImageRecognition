@@ -31,12 +31,13 @@
 {
     public bool SpinnerVisible { get; set; }
 
-
     async Task JavaScriptReturn()
     {
         SpinnerVisible = true;
+        await Task.Delay(1);
         await JS.InvokeVoidAsync("ComputerVisionFunction");
         SpinnerVisible = false;
+        await Task.Delay(1);
     }
 }
 
